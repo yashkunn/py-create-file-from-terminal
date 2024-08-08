@@ -67,5 +67,6 @@ def main() -> None:
             file_path = os.path.join(*dirs, file_name) if dirs else file_name
             create_file(file_path)
 
+
 if __name__ == "__main__":
     main()
