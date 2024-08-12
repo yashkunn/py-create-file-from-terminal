@@ -6,11 +6,8 @@ from typing import Any
 
 def create_directory(dirs: Any) -> None:
     path = os.path.join(*dirs)
-    if not os.path.exists(path):
-        os.makedirs(path)
-        print(f"Directory created: {path}")
-    else:
-        print(f"Directory already exists: {path}")
+    os.makedirs(path, exist_ok=True)
+    print(f"Directory created or already exists: {path}")
 
 
 def create_file(file_path: Any) -> None:
@@ -24,10 +21,11 @@ def create_file(file_path: Any) -> None:
     while True:
         line = input("Enter content line: ")
         if line.strip().lower() == "stop":
+            lines.append("")
             break
         lines.append(line)
 
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     with open(file_path, mode) as file:
         if mode == "w":
