@@ -11,10 +11,6 @@ def create_directory(dirs: Any) -> None:
 
 
 def create_file(file_path: Any) -> None:
-    if os.path.exists(file_path):
-        mode = "a"
-    else:
-        mode = "w"
 
     print("Enter content lines (type 'stop' on a new line to finish):")
     lines = []
@@ -27,11 +23,8 @@ def create_file(file_path: Any) -> None:
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    with open(file_path, mode) as file:
-        if mode == "w":
-            file.write(f"{timestamp}\n")
-        else:
-            file.write(f"\n{timestamp}\n")
+    with open(file_path, "a") as file:
+        file.write(f"{timestamp}\n")
 
         for i, line in enumerate(lines, start=1):
             file.write(f"{i} {line}\n")
