@@ -2,6 +2,7 @@ import sys
 import os
 from datetime import datetime
 from typing import Any
+import argparse
 
 
 def create_directory(dirs: Any) -> None:
@@ -40,30 +41,18 @@ def create_file(file_path: Any) -> None:
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
-        print("Usage: python create_file.py [-d dir1 dir2 ...] [-f file.txt]")
-        return
+    parser = argparse.ArgumentParser(description="Create directories and files with content.")
+    parser.add_argument('-d', '--dirs', nargs='+', help='Directories to create')
+    parser.add_argument('-f', '--file', help='File to create or append content to')
 
-    dir_flag = "-d"
-    file_flag = "-f"
+    args = parser.parse_args()
 
-    args = sys.argv[1:]
+    if args.dirs:
+        create_directory(args.dirs)
 
-    if dir_flag in args:
-        dir_index = args.index(dir_flag) + 1
-        dirs = []
-        while dir_index < len(args) and args[dir_index] not in [file_flag]:
-            dirs.append(args[dir_index])
-            dir_index += 1
-        if dirs:
-            create_directory(dirs)
-
-    if file_flag in args:
-        file_index = args.index(file_flag) + 1
-        if file_index < len(args):
-            file_name = args[file_index]
-            file_path = os.path.join(*dirs, file_name) if dirs else file_name
-            create_file(file_path)
+    if args.file:
+        file_path = os.path.join(*args.dirs, args.file) if args.dirs else args.file
+        create_file(file_path)
 
 
 if __name__ == "__main__":
