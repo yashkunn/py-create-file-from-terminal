@@ -1,4 +1,3 @@
-import sys
 import os
 from datetime import datetime
 from typing import Any
@@ -41,9 +40,20 @@ def create_file(file_path: Any) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Create directories and files with content.")
-    parser.add_argument('-d', '--dirs', nargs='+', help='Directories to create')
-    parser.add_argument('-f', '--file', help='File to create or append content to')
+    parser = argparse.ArgumentParser(
+        description="Create directories and files with content."
+    )
+    parser.add_argument(
+        "-d",
+        "--dirs",
+        nargs="+",
+        help="Directories to create"
+    )
+    parser.add_argument(
+        "-f",
+        "--file",
+        help="File to create or append content to"
+    )
 
     args = parser.parse_args()
 
@@ -51,7 +61,8 @@ def main() -> None:
         create_directory(args.dirs)
 
     if args.file:
-        file_path = os.path.join(*args.dirs, args.file) if args.dirs else args.file
+        file_path = os.path.join(*args.dirs, args.file) \
+            if args.dirs else args.file
         create_file(file_path)
 
 
